@@ -20,12 +20,12 @@ export default function SignupForm() {
     const [state, action, pending] = useActionState(signup, initialState)
 
     return (
-        <section className=" w-full h-screen flex flex-col gap-8 justify-center items-center">
+        <section className=" w-full h-screen flex flex-col gap-8 justify-end md:justify-center items-center px-6 pb-8">
             <div className="flex flex-col gap-2 justify-center items-center">
                 <h1 className=' text-2xl font-semibold'>Sign In</h1>
                 <p className='text-center text-sm'>Sign in to access your dashboard and <br />continue tracking your progress</p>
             </div>
-            <form action={action} noValidate className='flex flex-col md:w-1/4'>
+            <form action={action} noValidate className='flex flex-col w-full md:w-1/4'>
                 <div className='flex flex-col justify-center items-center'>
                     <label htmlFor="firstName" className='sr-only'>First Name</label>
                     <Input id="firstName" name="firstName" placeholder="First Name" defaultValue={state.values?.firstName?.toString() ?? ''} />
@@ -56,7 +56,7 @@ export default function SignupForm() {
                     <Input id="password" name="password" type="password" placeholder='Enter Password' />
                     <div className="my-4 w-full">
                         {state?.errors?.password && (
-                            <div className='self-start p-4 min-h-6 rounded-md border w-full flex justify-start items-center'>
+                            <div className='self-start p-4 min-h-6 rounded-md border w-full flex flex-col justify-start items-start'>
                                 <p className='text-xs text-red-500 mb-1'>Password must:</p>
                                 <ul className='pl-4'>
                                     {state.errors.password.map((error) => (

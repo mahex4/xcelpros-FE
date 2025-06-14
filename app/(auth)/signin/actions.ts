@@ -4,14 +4,10 @@ import { type SignInFormState, SignInFormSchema } from "@/lib/definitions"
 
 export async function signin(state: SignInFormState, formData: FormData) {
     // const cookie = await cookies();
-    const firstName = String(formData.get("firstName") ?? "");
-    const lastName = String(formData.get("lastName") ?? "");
     const email = String(formData.get("email") ?? "");
     const password = String(formData.get("password") ?? "");
 
     const validatedFields = SignInFormSchema.safeParse({
-        firstName,
-        lastName,
         email,
         password
     })
@@ -24,8 +20,6 @@ export async function signin(state: SignInFormState, formData: FormData) {
         return {
             errors: validatedFields.error.flatten().fieldErrors,
             values: {
-                firstName,
-                lastName,
                 email,
                 password
             }
