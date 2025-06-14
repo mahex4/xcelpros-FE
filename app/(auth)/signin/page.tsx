@@ -21,7 +21,7 @@ export default function SignupForm() {
         <section className=" w-full h-screen flex flex-col gap-8 justify-center items-center px-5">
             <div className="flex flex-col gap-2 justify-center items-center">
                 <h1 className=' text-2xl font-semibold'>Sign In</h1>
-                <p className='text-center text-sm'>Sign in to access your dashboard and <br/>continue tracking your progress</p>
+                <p className='text-center text-sm'>Sign in to access your dashboard and <br />continue tracking your progress</p>
             </div>
             <form action={action} noValidate className='flex flex-col w-full md:w-1/4'>
                 <div className='flex flex-col justify-center items-center'>
@@ -48,7 +48,7 @@ export default function SignupForm() {
                         )}
                     </div>
                 </div>
-                
+
                 <Button disabled={pending} type="submit">
                     Sign Up
                 </Button>
