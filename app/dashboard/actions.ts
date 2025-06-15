@@ -1,6 +1,6 @@
 "use server";
 
-import { CaloriesFormState, CaloriesResponse, GroupedMeals, SaveMealState } from "@/lib/types";
+import { CaloriesFormState, CaloriesResponse, GroupedMeals, Meal, SaveMealState } from "@/lib/types";
 import { cookies } from "next/headers";
 
 export async function getCalories(
@@ -104,10 +104,10 @@ export async function saveMeal(
         };
     }
 }
-
 export async function getMeals(): Promise<GroupedMeals> {
     const cookie = await cookies();
     const token = cookie.get("token")?.value;
+    const DAILY_CALORIE_TARGET = 2000;
 
     if (!token) {
         throw new Error("Authentication required");
@@ -131,7 +131,30 @@ export async function getMeals(): Promise<GroupedMeals> {
         }
 
         const data = await response.json();
-        return data.meals || [];
+        const mealsData = data.meals || [];
+
+        // Add calorie calculations to each day's data
+        const enhancedMeals = mealsData.map((day: unknown) => {
+            const totalCalories = day.meals.reduce(
+                (sum: number, meal: Meal) => sum + meal.total_calories,
+                0
+            );
+            const caloriesLeft = Math.max(0, DAILY_CALORIE_TARGET - totalCalories);
+            const caloriesExceeded = Math.max(0, totalCalories - DAILY_CALORIE_TARGET);
+
+            return {
+                ...day,
+                calorieSummary: {
+                    consumed: totalCalories,
+                    left: caloriesLeft,
+                    exceeded: caloriesExceeded,
+                    target: DAILY_CALORIE_TARGET
+                }
+            };
+        });
+
+        console.log('Enhanced grouped meal data:', enhancedMeals);
+        return enhancedMeals;
     } catch (error) {
         console.error("Get meals error:", error);
         throw error instanceof Error

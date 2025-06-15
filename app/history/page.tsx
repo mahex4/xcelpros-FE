@@ -1,6 +1,7 @@
 import { GroupedMeals } from "@/lib/types";
 import MealCard from "@/components/MealCard";
 import { getMeals } from "../dashboard/actions";
+import FloatingHeader from "@/components/FloatingHeader";
 
 export default async function MealHistory() {
     let groupedMeals: GroupedMeals | null = null;
@@ -21,12 +22,15 @@ export default async function MealHistory() {
     }
 
     return (
-        <div className="m-2 h-screen overflow-hidden w-[95vw] mb-32 md:mb-auto">
-            <h3 className="text-lg font-bold mb-4">Your Meal History</h3>
-            <div className="space-y-4 flex flex-col md:flex-row gap-4 w-full overflow-scroll h-full mb-12">
+        <div className="m-2 h-screen flex flex-col gap-2 w-[95vw] mb-32 md:mb-auto">
+            <div className="pr-2">
+                <FloatingHeader />
+            </div>
+            <h3 className="text-lg font-bold my-2">Your Meal History</h3>
+            <div className="flex flex-row gap-4 w-full overflow-x-auto pb-4"> 
                 {groupedMeals.map(group => (
-                    <div key={group.date} className="mb-6 min-w-[20vw]">
-                        <div className="flex items-center mb-3">
+                    <div key={group.date} className="flex flex-col min-w-[20vw] max-w-[20vw] h-full">
+                        <div className="flex items-center mb-3 sticky top-0 z-10">
                             <h4 className="font-semibold text-gray-700">
                                 {new Date(group.date).toLocaleDateString('en-US', {
                                     weekday: 'long',
@@ -40,7 +44,7 @@ export default async function MealHistory() {
                             </span>
                         </div>
 
-                        <div className="space-y-3">
+                        <div className="space-y-3 overflow-y-auto h-[calc(100vh-200px)]">
                             {group.meals.map((meal, idx) => (
                                 <MealCard meal={meal} key={`meal-card-${meal.dish_name}-${idx}`} />
                             ))}
