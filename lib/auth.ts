@@ -28,7 +28,7 @@ export async function getCurrentUser(): Promise<MeResponse | null> {
     const cookie = await headers()
     // const cookie2 = cookie.get('cookie');
 
-    const res = await fetch('http://localhost:5001/auth/me', {
+    const res = await fetch('https://coruscant-5266.onrender.com/auth/me', {
         headers: {
             Cookie: cookie.get('cookie') ?? '',
         },
