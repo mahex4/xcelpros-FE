@@ -1,7 +1,8 @@
 "use client";
-import { getCalories } from "../actions";
-import { CaloriesFormState } from "@/lib/types";
-import { useActionState } from "react";
+import { getCalories, saveMeal } from "../actions";
+import { CaloriesFormState, SaveMealState } from "@/lib/types";
+import { useMealStore } from "@/stores/mealStore";
+import { useActionState, useState, useTransition } from "react";
 
 const initialState: CaloriesFormState = {
     error: null,
@@ -10,6 +11,28 @@ const initialState: CaloriesFormState = {
 
 export default function CalorieForm() {
     const [state, formAction] = useActionState(getCalories, initialState);
+    const [saveState, setSaveState] = useState<SaveMealState>({
+        error: null,
+        success: false,
+    });
+    const [isSaving, startSaving] = useTransition();
+    const triggerRefresh = useMealStore(state => state.triggerRefresh); 
+
+    const handleSaveMeal = () => {
+        if (!state.data) return;
+
+        setSaveState({ error: null, success: false });
+
+        startSaving(async () => {
+            const result = await saveMeal(state.data!);
+            setSaveState(result);
+
+            if (result.success) {
+                triggerRefresh();
+            }
+        });
+    };
+    
 
     return (
         <form
@@ -66,18 +89,46 @@ export default function CalorieForm() {
             </button>
 
             {state?.data && (
-                <div
-                    className="mt-4 p-4 bg-gray-100 rounded"
-                    role="status"
-                    aria-live="polite"
-                >
-                    <h3 className="font-bold">{state.data.dish_name}</h3>
-                    <p>Servings: {state.data.servings}</p>
-                    <p>Calories per serving: {state.data.calories_per_serving}</p>
-                    <p>Total calories: {state.data.total_calories}</p>
-                    <p className="text-sm text-gray-500">Source: {state.data.source}</p>
+                <div className="flex flex-col">
+                    <div
+                        className="mt-4 p-4 bg-gray-100 rounded"
+                        role="status"
+                        aria-live="polite"
+                    >
+                        <h3 className="font-bold">{state.data.dish_name}</h3>
+                        <p>Servings: {state.data.servings}</p>
+                        <p>Calories per serving: {state.data.calories_per_serving}</p>
+                        <p>Total calories: {state.data.total_calories}</p>
+                        <p className="text-sm text-gray-500">Source: {state.data.source}</p>
+                    </div>
+
+                    <div className="flex items-center space-x-4">
+                        <button
+                            onClick={handleSaveMeal}
+                            disabled={isSaving}
+                            className={`px-4 py-2 rounded font-medium ${isSaving
+                                    ? "bg-gray-400 cursor-not-allowed"
+                                    : "bg-green-600 hover:bg-green-700"
+                                } text-white transition-colors`}
+                            aria-label="Add to today's meals"
+                        >
+                            {isSaving ? "Saving..." : "Add to Today's Meals"}
+                        </button>
+
+                        {saveState.error && (
+                            <p className="text-red-500" role="alert">
+                                {saveState.error}
+                            </p>
+                        )}
+                        {saveState.success && (
+                            <p className="text-green-500" role="status">
+                                Meal added successfully!
+                            </p>
+                        )}
+                    </div>
                 </div>
             )}
+            
         </form>
     );
 }

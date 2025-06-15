@@ -1,6 +1,6 @@
 "use server";
 
-import { CaloriesFormState, CaloriesResponse } from "@/lib/types";
+import { CaloriesFormState, CaloriesResponse, GroupedMeals, SaveMealState } from "@/lib/types";
 import { cookies } from "next/headers";
 
 export async function getCalories(
@@ -34,7 +34,7 @@ export async function getCalories(
     console.log('calling', rawFormData);
 
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/get-calories`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/calories/get-calories`, {
             method: "POST",
             headers: { 
                 "Content-Type": "application/json",
@@ -60,5 +60,82 @@ export async function getCalories(
             error: error instanceof Error ? error.message : "An unknown error occurred",
             data: null,
         };
+    }
+}
+
+export async function saveMeal(
+    mealData: CaloriesResponse
+): Promise<SaveMealState> {
+    const cookie = await cookies();
+    const token = cookie.get("token")?.value;
+
+    if (!token) {
+        return { error: "Authentication required", success: false };
+    }
+
+    try {
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/meals/save-meal`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(mealData),
+            }
+        );
+
+        if (!response.ok) {
+            // Try to get error details from response
+            const errorData = await response.json().catch(() => ({}));
+            return {
+                error: errorData.error || "Failed to save meal",
+                success: false,
+            };
+        }
+
+        return { error: null, success: true };
+    } catch (error) {
+        console.error("Save meal error:", error);
+        return {
+            error: error instanceof Error ? error.message : "An unknown error occurred",
+            success: false,
+        };
+    }
+}
+
+export async function getMeals(): Promise<GroupedMeals> {
+    const cookie = await cookies();
+    const token = cookie.get("token")?.value;
+
+    if (!token) {
+        throw new Error("Authentication required");
+    }
+
+    try {
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/meals/meals`,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to fetch meals");
+        }
+
+        const data = await response.json();
+        return data.meals || [];
+    } catch (error) {
+        console.error("Get meals error:", error);
+        throw error instanceof Error
+            ? error
+            : new Error("An unknown error occurred");
     }
 }
