@@ -1,8 +1,11 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { getCalories, saveMeal } from "../actions";
 import { CaloriesFormState, SaveMealState } from "@/lib/types";
 import { useMealStore } from "@/stores/mealStore";
 import { useActionState, useState, useTransition } from "react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const initialState: CaloriesFormState = {
     error: null,
@@ -37,21 +40,22 @@ export default function CalorieForm() {
     return (
         <form
             action={formAction}
-            className="space-y-4"
+            className="space-y-4 min-w-1/3 w-full md:w-auto"
             aria-labelledby="calorie-form-title"
         >
-            <h2 id="calorie-form-title" className="text-xl font-bold">
+            <h2 id="calorie-form-title" className="text-xl font-bold text-center">
                 Calculate Dish Calories
             </h2>
 
             <div>
-                <label htmlFor="dish_name" className="block mb-1 font-medium">
+                <Label htmlFor="dish_name" className="block mb-1 font-medium">
                     Dish Name
-                </label>
-                <input
+                </Label>
+                <Input
                     type="text"
                     id="dish_name"
                     name="dish_name"
+                    placeholder="Enter your Dish"
                     required
                     aria-required="true"
                     aria-invalid={state?.error ? "true" : "false"}
@@ -66,10 +70,10 @@ export default function CalorieForm() {
             </div>
 
             <div>
-                <label htmlFor="servings" className="block mb-1 font-medium">
+                <Label htmlFor="servings" className="block mb-1 font-medium">
                     Servings
-                </label>
-                <input
+                </Label>
+                <Input
                     type="number"
                     id="servings"
                     name="servings"
@@ -80,18 +84,18 @@ export default function CalorieForm() {
                 />
             </div>
 
-            <button
+            <Button
                 type="submit"
-                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 aria-label="Calculate calories"
+                className="w-full"
             >
                 Calculate Calories
-            </button>
+            </Button>
 
             {state?.data && (
-                <div className="flex flex-col">
+                <div className="flex flex-col gap-2 w-full">
                     <div
-                        className="mt-4 p-4 bg-gray-100 rounded"
+                        className="mt-4 p-4 bg-slate-100 rounded-md w-full"
                         role="status"
                         aria-live="polite"
                     >
@@ -99,21 +103,18 @@ export default function CalorieForm() {
                         <p>Servings: {state.data.servings}</p>
                         <p>Calories per serving: {state.data.calories_per_serving}</p>
                         <p>Total calories: {state.data.total_calories}</p>
-                        <p className="text-sm text-gray-500">Source: {state.data.source}</p>
+                        <p className="text-sm text-slate-500">Source: {state.data.source}</p>
                     </div>
 
                     <div className="flex items-center space-x-4">
-                        <button
+                        <Button
                             onClick={handleSaveMeal}
                             disabled={isSaving}
-                            className={`px-4 py-2 rounded font-medium ${isSaving
-                                    ? "bg-gray-400 cursor-not-allowed"
-                                    : "bg-green-600 hover:bg-green-700"
-                                } text-white transition-colors`}
+                            className="w-full"
                             aria-label="Add to today's meals"
                         >
                             {isSaving ? "Saving..." : "Add to Today's Meals"}
-                        </button>
+                        </Button>
 
                         {saveState.error && (
                             <p className="text-red-500" role="alert">

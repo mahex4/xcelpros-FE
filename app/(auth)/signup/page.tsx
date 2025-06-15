@@ -20,12 +20,12 @@ export default function SignupForm() {
     const [state, action, pending] = useActionState(signup, initialState)
 
     return (
-        <section className=" w-full h-screen flex flex-col gap-8 justify-end md:justify-center items-center px-6 pb-8">
+        <section className=" w-full h-screen flex flex-col gap-8 justify-center items-center px-6 pb-8 ">
             <div className="flex flex-col gap-2 justify-center items-center">
-                <h1 className=' text-2xl font-semibold'>Sign In</h1>
-                <p className='text-center text-sm'>Sign in to access your dashboard and <br />continue tracking your progress</p>
+                <h1 className=' text-2xl font-semibold'>Sign Up</h1>
+                <p className='text-center text-sm'>Sign Up to start tracking calories <br />staying on top of your meal plan</p>
             </div>
-            <form action={action} noValidate className='flex flex-col w-full md:w-1/4'>
+            <form action={action} noValidate className='flex flex-col w-full md:w-1/4 bg-white rounded-md p-5'>
                 <div className='flex flex-col justify-center items-center'>
                     <label htmlFor="firstName" className='sr-only'>First Name</label>
                     <Input id="firstName" name="firstName" placeholder="First Name" defaultValue={state.values?.firstName?.toString() ?? ''} />

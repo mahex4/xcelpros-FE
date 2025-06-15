@@ -126,87 +126,73 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   z-index: -1;
-  opacity: 0.5;
   overflow: hidden;
 }
 
 .gradient-blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.7;
-  animation: move 15s infinite alternate ease-in-out;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: float 15s infinite linear;
+  will-change: transform;
+  /* Optimizes animations */
 }
 
 .blob-1 {
   background: linear-gradient(120deg, #a1c4fd, #c2e9fb);
   width: 400px;
   height: 400px;
-  top: -100px;
-  left: -100px;
-  animation-duration: 20s;
+  animation: float 20s infinite linear;
 }
 
 .blob-2 {
   background: linear-gradient(120deg, #ffecd2, #fcb69f);
   width: 600px;
   height: 600px;
-  bottom: -150px;
-  right: -150px;
-  animation-duration: 25s;
-  animation-delay: -5s;
+  animation: float 25s infinite linear reverse;
 }
 
 .blob-3 {
   background: linear-gradient(120deg, #e0c3fc, #8ec5fc);
   width: 500px;
   height: 500px;
-  top: 40%;
-  right: 20%;
-  animation-duration: 30s;
-  animation-delay: -10s;
+  animation: float 30s infinite linear;
 }
 
 .blob-4 {
   background: linear-gradient(120deg, #d4fc79, #96e6a1);
   width: 450px;
   height: 450px;
-  bottom: 20%;
-  left: 15%;
-  animation-duration: 22s;
-  animation-delay: -7s;
+  animation: float 22s infinite linear reverse;
 }
 
-@keyframes move {
+@keyframes float {
   0% {
-    transform: translate(0, 0) rotate(0deg);
+    transform: translate(-50%, -50%) scale(1);
   }
 
   25% {
-    transform: translate(30px, 40px) rotate(10deg);
+    transform: translate(25vw, 10vh) scale(1.1);
   }
 
   50% {
-    transform: translate(-20px, 60px) rotate(-5deg);
+    transform: translate(50vw, 50vh) scale(0.9);
   }
 
   75% {
-    transform: translate(40px, -30px) rotate(15deg);
+    transform: translate(10vw, 25vh) scale(1.05);
   }
 
   100% {
-    transform: translate(-30px, -40px) rotate(-10deg);
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
-/* Content container */
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-  z-index: 10;
   position: relative;
+  z-index: 10;
 }
