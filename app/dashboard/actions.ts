@@ -104,6 +104,18 @@ export async function saveMeal(
         };
     }
 }
+
+interface DayWiseMeal {
+    date: string
+    meals: Meal[]
+    calorieSummary?: { 
+        consumed: string
+        left: string
+        exceeded: string
+        target: string 
+    }
+}
+
 export async function getMeals(): Promise<GroupedMeals> {
     const cookie = await cookies();
     const token = cookie.get("token")?.value;
@@ -134,7 +146,7 @@ export async function getMeals(): Promise<GroupedMeals> {
         const mealsData = data.meals || [];
 
         // Add calorie calculations to each day's data
-        const enhancedMeals = mealsData.map((day: unknown) => {
+        const enhancedMeals = mealsData.map((day: DayWiseMeal) => {
             const totalCalories = day.meals.reduce(
                 (sum: number, meal: Meal) => sum + meal.total_calories,
                 0
