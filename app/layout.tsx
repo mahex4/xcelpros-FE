@@ -28,10 +28,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="flex gap-2">
-          <div className="">
-            <Sidebar />
-          </div>
+        <div className="gradient-bg">
+          <div className="gradient-blob blob-1"></div>
+          <div className="gradient-blob blob-2"></div>
+          <div className="gradient-blob blob-3"></div>
+          <div className="gradient-blob blob-4"></div>
+        </div>
+        <div className="flex">
+          <Sidebar />
           {children}
         </div>
       </body>

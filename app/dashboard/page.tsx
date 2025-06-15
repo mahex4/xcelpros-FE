@@ -13,13 +13,10 @@ export default async function DashboardPage() {
 
     return (
         <div className='flex gap-4 w-full h-screen p-2'>
-            <div className=" bg-slate-300 w-full h-full flex flex-col justify-center items-center p-4 rounded-md">
+            <div className=" bg-white w-full h-full flex flex-col justify-center items-center p-4 rounded-md">
                 <h1>Welcome {user.firstName}</h1>
                 <CalorieForm />
             </div>
-            {/* <form action={logout}>
-                <Button type="submit">Sign Out</Button>
-            </form> */}
         </div>
     );
 }

@@ -9,7 +9,7 @@ export default function Sidebar() {
     const debouncedHover = useDebounce(hovered, 500)
 
     return (
-        <div className="h-screen p-2">
+        <div className="h-screen p-2 pr-0">
             <nav className=" bg-slate-900 p-2 rounded-md flex flex-col gap-3 h-full font-semibold text-white" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
                 <Link href="/dashboard" className="flex gap-2 hover:bg-slate-500 hover:text-slate-900 p-2 rounded-sm"><CookingPot strokeWidth={2.5} /> {debouncedHover && "Dashboard"}</Link >
                 <Link href="/history" className="flex gap-2 hover:bg-slate-500 hover:text-slate-900 p-2 rounded-sm"><Logs strokeWidth={2.5} />{debouncedHover && "History"} </Link >
