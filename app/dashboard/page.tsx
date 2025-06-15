@@ -3,11 +3,10 @@ import { getCurrentUser } from '@/lib/auth';
 // import { Button } from '@/components/ui/button';
 // import { logout } from '../(auth)/signin/actions';
 import CalorieForm from './_components/CalorieForm';
+import { DailyQuota } from './_components/DailyQuota';
 
 export default async function DashboardPage() {
     const user = await getCurrentUser();
-
-    console.log('userrr', user);
 
     if (!user) redirect('/signin');
 
@@ -17,6 +16,7 @@ export default async function DashboardPage() {
                 <h1>Welcome {user.firstName}</h1>
                 <CalorieForm />
             </div>
+            <DailyQuota />
         </div>
     );
 }
