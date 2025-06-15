@@ -18,14 +18,7 @@ export type SaveMealState = {
 
 export type GroupedMeals = {
     date: string;
-    meals: {
-        dish_name: string;
-        servings: number;
-        calories_per_serving: number;
-        total_calories: number;
-        source: string;
-        date: string;
-    }[];
+    meals: Meal[];
 }[];
 
 export type Meal = {
