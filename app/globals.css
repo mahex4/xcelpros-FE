@@ -136,17 +136,17 @@
   position: absolute;
   border-radius: 50%;
   filter: blur(80px);
-  opacity: 0.4;
-  animation: float 15s infinite linear;
   will-change: transform;
   /* Optimizes animations */
 }
 
+/* Light mode gradients */
 .blob-1 {
   background: linear-gradient(120deg, #a1c4fd, #c2e9fb);
   width: 400px;
   height: 400px;
   animation: float 20s infinite linear;
+  opacity: 0.4;
 }
 
 .blob-2 {
@@ -154,6 +154,7 @@
   width: 600px;
   height: 600px;
   animation: float 25s infinite linear reverse;
+  opacity: 0.4;
 }
 
 .blob-3 {
@@ -161,6 +162,7 @@
   width: 500px;
   height: 500px;
   animation: float 30s infinite linear;
+  opacity: 0.4;
 }
 
 .blob-4 {
@@ -168,6 +170,28 @@
   width: 450px;
   height: 450px;
   animation: float 22s infinite linear reverse;
+  opacity: 0.4;
+}
+
+/* Dark mode gradients */
+.dark .blob-1 {
+  background: linear-gradient(120deg, #2c3e50, #4a6491);
+  opacity: 0.3;
+}
+
+.dark .blob-2 {
+  background: linear-gradient(120deg, #4a235a, #6c3483);
+  opacity: 0.3;
+}
+
+.dark .blob-3 {
+  background: linear-gradient(120deg, #1a5276, #2874a6);
+  opacity: 0.3;
+}
+
+.dark .blob-4 {
+  background: linear-gradient(120deg, #186a3b, #239b56);
+  opacity: 0.3;
 }
 
 @keyframes float {

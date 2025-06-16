@@ -26,7 +26,7 @@ export default function BackButton({
     return (
         <button
             onClick={handleClick}
-            className={`p-2 rounded-sm border bg-card hover:bg-slate-900 hover:text-white dark:hover:bg-gray-700 transition-colors ${className}`}
+            className={`p-2 rounded-sm border bg-card cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors ${className}`}
             aria-label="Go back"
         >
             <ArrowLeft size={iconSize} />
