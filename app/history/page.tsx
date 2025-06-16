@@ -39,7 +39,7 @@ export default async function MealHistory() {
                 <FloatingHeader />
             </div>
             <h3 className="text-lg font-bold my-2">Your Meal History</h3>
-            <div className="flex flex-col md:flex-row gap-4 w-full overflow-x-auto h-full md:overflow-hidden"> 
+            <div className="flex flex-col md:flex-row gap-4 w-full overflow-x-auto h-full"> 
                 {groupedMeals.map(group => (
                     <div key={group.date} className="flex flex-col min-w-[20vw] md:max-w-[20vw] gap-4 h-full">
                         <div className="flex items-center justify-between sticky top-0 z-10 bg-card p-4 border rounded-md">
