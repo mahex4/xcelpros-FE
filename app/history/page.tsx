@@ -47,7 +47,7 @@ export default async function MealHistory() {
     }
 
     return (
-        <div className="p-2 w-screen h-screen flex flex-col gap-2 md:w-[95vw] pb-24 md:pb-4">
+        <div className="p-2 w-screen h-screen flex flex-col gap-2 md:w-[95vw] pb-24 md:pl-0 md:pb-4">
             <div className="pr-2">
                 <FloatingHeader />
             </div>
