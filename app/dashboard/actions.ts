@@ -17,7 +17,6 @@ export async function getCalories(
         servings: Number(formData.get("servings")) || 1,
     };
 
-    // Input validation
     if (!rawFormData.dish_name?.trim()) {
         return {
             error: "Dish name is required",

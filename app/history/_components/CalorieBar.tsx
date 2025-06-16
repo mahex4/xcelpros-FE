@@ -47,19 +47,19 @@ export default function CalorieBar({ calorieSummary }: { calorieSummary: Calorie
 
             <CardContent className="w-full py-4">
                 <div className="w-full h-6 flex overflow-hidden" style={getRadiusStyle()}>
-                    {left > 0 && (
-                        <div
-                            style={{
-                                width: `${remainingPercent}%`,
-                                backgroundColor: chartColors.remaining,
-                            }}
-                        />
-                    )}
                     {consumed > 0 && (
                         <div
                             style={{
                                 width: `${consumedPercent}%`,
                                 backgroundColor: chartColors.consumed,
+                            }}
+                        />
+                    )}
+                    {left > 0 && (
+                        <div
+                            style={{
+                                width: `${remainingPercent}%`,
+                                backgroundColor: chartColors.remaining,
                             }}
                         />
                     )}

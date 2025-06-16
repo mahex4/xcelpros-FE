@@ -109,17 +109,17 @@ export function DailyQuota({ calorieSummary }: {
                             className="stroke-transparent stroke-2"
                         />
                         <RadialBar
-                            dataKey="current"
-                            stackId="a"
-                            cornerRadius={5}
-                            fill="var(--color-current)"
-                            className="stroke-transparent stroke-2"
-                        />
-                        <RadialBar
                             dataKey="exceed"
                             fill="var(--color-exceed)"
                             stackId="a"
                             cornerRadius={5}
+                            className="stroke-transparent stroke-2"
+                        />
+                        <RadialBar
+                            dataKey="current"
+                            stackId="a"
+                            cornerRadius={5}
+                            fill="var(--color-current)"
                             className="stroke-transparent stroke-2"
                         />
                     </RadialBarChart>

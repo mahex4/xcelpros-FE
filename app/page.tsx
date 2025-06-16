@@ -5,6 +5,10 @@ import InfoBarLeft from "./_components/InfoBarLeft";
 import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
+export const metadata = {
+  title: "Calorie tracker",
+  description: "Track Your Nutrition Smarter",
+};
 export default async function Home() {
     const user = await getCurrentUser();
 
@@ -14,7 +18,7 @@ export default async function Home() {
     <div className="w-full font-[family-name:var(--font-geist-sans)] px-4 md:px-12">
       <main className="flex flex-col gap-[32px] w-full ">
         <section className="bg-gradient-to-br w-full md:px-4 h-screen flex flex-col md:flex-row items-center justify-between md:justify-between">
-          <div id="left-holder" className=" flex flex-col gap-12 ">
+          <div id="left-holder" className=" flex flex-col gap-6">
             <div className=" text-left">
               <h1 className="text-5xl font-bold text-gray-900 mb-4">
                 Track Your Nutrition <span className="text-slate-900">Smarter</span>
@@ -26,7 +30,7 @@ export default async function Home() {
                 <Image fill src={'/mobile1.webp'} alt='hero image' />
               </div>
               <div className="flex flex-col md:flex-row gap-4 justify-start">
-                <Link className="w-full md:w-auto" href="/signup"><Button className="w-full md:w-auto text-xl">Get Started - It&apos;s Free</Button></Link>
+                <Link className="w-full md:w-auto" href="/signup"><Button className="w-full md:w-auto text-xl">Get Started - Sign Up Now</Button></Link>
                 <Link className="w-full md:w-auto" href="/signin?email=demo@gmail.com&password=Pa$$w0rd"><Button variant="secondary" className="w-full md:w-auto text-xl">View Demo</Button></Link>
               </div>
               Already a member? <Link href="/signin"><Button variant="link">Sign In</Button></Link>

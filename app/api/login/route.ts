@@ -17,7 +17,7 @@ export async function POST(req: Request) {
 
     const data = await res.json();
 
-    // Save token in HTTP-only cookie
+    // Saving token in HTTP-only cookie
     cookie.set('token', data.token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',

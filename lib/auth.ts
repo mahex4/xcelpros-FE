@@ -26,14 +26,13 @@ type MeResponse = {
 
 export async function getCurrentUser(): Promise<MeResponse | null> {
     const cookie = await headers()
-    // const cookie2 = cookie.get('cookie');
 
     const res = await fetch('https://coruscant-5266.onrender.com/auth/me', {
         headers: {
             Cookie: cookie.get('cookie') ?? '',
         },
         credentials: 'include',
-        cache: 'no-store', // ensure fresh user every request
+        cache: 'no-store',
     });
 
     if (!res.ok) return null;
