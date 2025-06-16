@@ -14,8 +14,8 @@ export default function MealCard({ meal }: { meal: Meal }) {
             </div>
             <div className="grid grid-cols-2 gap-1 mt-2 text-sm">
                 <div>Servings: <span className=" font-semibold">{meal.servings}</span></div>
-                <div>Cal/serving: {meal.calories_per_serving}</div>
-                <div>Total calories: {meal.total_calories}</div>
+                <div>Cal/serving: <span>{meal.calories_per_serving}</span></div>
+                <div>Total calories: <span className=" font-semibold">{meal.total_calories}</span></div>
                 <div>Source: {meal.source?.slice(0,5)}</div>
             </div>
         </div>
