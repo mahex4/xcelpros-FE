@@ -12,13 +12,20 @@ export default async function DashboardPage() {
     return (
         <div className='flex flex-col-reverse md:flex-row gap-2 w-full md:h-screen p-2'>
             <div className="flex flex-col gap-2 w-full">
-                <FloatingHeader />
+                <div className=" hidden md:block">
+                    <FloatingHeader />
+                </div>
                 <div className=" bg-white w-full h-full flex flex-col justify-center items-center p-4 rounded-md border mb-24 md:mb-auto">
                     <h1>Welcome {user.firstName}</h1>
                     <CalorieForm />
                 </div>
             </div>
-            <div className="h-full"><TodaySegment /></div>
+            <div className="h-full">
+                <div className="dlex md:hidden py-2">
+                    <FloatingHeader />
+                </div>
+                <TodaySegment />
+            </div>
         </div>
     );
 }
