@@ -3,7 +3,6 @@
 import {
     Card,
     CardContent,
-    CardDescription,
     CardFooter,
     CardHeader,
     CardTitle,
@@ -39,10 +38,9 @@ export default function CalorieBar({ calorieSummary }: { calorieSummary: Calorie
     return (
         <Card className="flex flex-col">
             <CardHeader className="items-center pb-0">
-                <CardTitle>Daily Calorie Usage</CardTitle>
-                <CardDescription>
+                <CardTitle>
                     {consumed >= target ? 'Goal exceeded!' : 'Progress toward daily goal'}
-                </CardDescription>
+                </CardTitle>
             </CardHeader>
 
             <CardContent className="w-full py-4">

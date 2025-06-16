@@ -5,6 +5,7 @@ import { logout } from "../(auth)/signin/actions";
 import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
+import FloatingHeader from "@/components/FloatingHeader";
 
 export const metadata: Metadata = {
     title: "Profile",
@@ -16,7 +17,8 @@ export default async function page() {
 
     if (!user) redirect('/signin');
     return (
-        <main className="w-full flex flex-col gap-4 p-2">
+        <main className="w-full flex flex-col gap-4 p-2 md:pl-0">
+            <FloatingHeader />
             <section className="bg-white w-full p-4 rounded-md">
                 <h1 className=" font-bold text-xl">Daily Goal</h1>
                 <form
@@ -34,7 +36,7 @@ export default async function page() {
                             required
                             aria-required="true"
                             aria-describedby="dish-name-error"
-                            className="w-full border rounded mb-2"
+                            className="w-full border rounded mb-2 md:max-w-1/6"
                             defaultValue={2000}
                         />
                     </div>
