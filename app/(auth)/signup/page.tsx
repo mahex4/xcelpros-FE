@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input'
 import { SignUpFormState } from '@/lib/definitions'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import BackButton from '@/components/BackButton'
 
 
 const initialState: SignUpFormState = {
@@ -21,7 +22,11 @@ export default function SignupForm() {
     const [state, action, pending] = useActionState(signup, initialState)
 
     return (
-        <section className=" w-full h-screen  flex flex-col gap-2 justify-center items-center px-2">
+        <section className=" w-full h-screen relative flex flex-col gap-2 justify-center items-center px-2">
+            <div className="fixed p-5 top-0 left-0 flex gap-2 justify-center items-center">
+                <BackButton />
+                <span className=' font-medium text-xl'>Home</span>
+            </div>
             <main className='w-full md:w-1/3 flex flex-col gap-2 justify-center items-center border bg-white rounded-md p-5'>
                 <div className="flex flex-col gap-2 justify-center items-center">
                     <h1 className=' text-2xl font-semibold'>Sign Up</h1>

@@ -2,10 +2,15 @@ import { GroupedMeals } from "@/lib/types";
 import MealCard from "@/components/MealCard";
 import { getMeals } from "../dashboard/actions";
 import FloatingHeader from "@/components/FloatingHeader";
+import { getCurrentUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export default async function MealHistory() {
     let groupedMeals: GroupedMeals | null = null;
     let error: string | null = null;
+        const user = await getCurrentUser();
+    
+    if (!user) redirect('/signin');
 
     try {
         groupedMeals = await getMeals();

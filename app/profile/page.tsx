@@ -5,12 +5,12 @@ import { logout } from "../(auth)/signin/actions";
 
 export default function page() {
     return (
-        <main className="w-full flex flex-col gap-4 m-2">
+        <main className="w-full flex flex-col gap-4 p-2">
             <section className="bg-white w-full p-4 rounded-md">
                 <h1 className=" font-bold text-xl">Daily Goal</h1>
                 <form
                     // action={}
-                    className="space-y-4 mt-4 min-w-1/3"
+                    className="mt-4 "
                     aria-labelledby="calorie-form-title"
                 >
                     <div className="flex flex-col gap-4">
@@ -23,7 +23,8 @@ export default function page() {
                             required
                             aria-required="true"
                             aria-describedby="dish-name-error"
-                            className="w-full border rounded"
+                            className="w-full border rounded mb-2"
+                            defaultValue={2000}
                         />
                     </div>
 
@@ -32,6 +33,7 @@ export default function page() {
                             type="submit"
                             aria-label="Calculate calories"
                             className="w-full"
+                            disabled
                         >
                             Calculate Calories
                         </Button>
@@ -43,7 +45,7 @@ export default function page() {
                 <h1 className=" font-bold text-xl">Logout of your account</h1>
                 <form
                     action={logout}
-                    className="space-y-4 mt-4 w-fit"
+                    className="mt-4 w-fit"
                     aria-labelledby="calorie-form-title"
                 >
                     <Button

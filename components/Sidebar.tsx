@@ -22,7 +22,7 @@ export default function Sidebar() {
     ];
 
     return (
-        <div className="md:h-screen fixed md:static bottom-0 w-full md:w-auto bg-white md:bg-transparent p-2">
+        <div className="md:h-screen fixed md:static bottom-0 w-full md:w-auto md:bg-transparent p-2">
             <nav className="md:hidden flex justify-around w-full bg-slate-900 p-2 rounded-xl">
                 {navItems.map((item) => (
                     <Link

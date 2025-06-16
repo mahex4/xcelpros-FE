@@ -6,6 +6,7 @@ import {
     Card,
     CardContent,
     CardDescription,
+    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
@@ -124,6 +125,28 @@ export function DailyQuota({ calorieSummary }: {
                     </RadialBarChart>
                 </ChartContainer>
             </CardContent>
+            <CardFooter>
+                <CardFooter className="flex justify-between gap-4 pt-6">
+                    <div className="flex flex-col items-center">
+                        <span className="text-sm text-muted-foreground">Consumed</span>
+                        <span className="text-xl font-bold" style={{ color: 'var(--chart-1)' }}>
+                            {consumed.toLocaleString()} kcal
+                        </span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                        <span className="text-sm text-muted-foreground">Remaining</span>
+                        <span className="text-xl font-bold" style={{ color: 'var(--chart-2)' }}>
+                            {rest.toLocaleString()} kcal
+                        </span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                        <span className="text-sm text-muted-foreground">Exceeded</span>
+                        <span className="text-xl font-bold" style={{ color: 'var(--chart-3)' }}>
+                            {exceed.toLocaleString()} kcal
+                        </span>
+                    </div>
+                </CardFooter>
+            </CardFooter>
         </Card>
     )
 }
