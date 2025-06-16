@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
-
+import { Toaster } from "@/components/ui/sonner"
 
 
 const outfit = Outfit({ subsets: ['latin'] })
@@ -31,6 +31,7 @@ export default function RootLayout({
         <div className="flex flex-col md:flex-row w-full">
           <Sidebar />
           {children}
+          <Toaster />
         </div>
       </body>
     </html>

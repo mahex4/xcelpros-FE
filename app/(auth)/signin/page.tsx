@@ -6,6 +6,7 @@ import { SignInFormState } from '@/lib/definitions'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 
 
 const initialState: SignInFormState = {
@@ -18,7 +19,10 @@ const initialState: SignInFormState = {
 
 export default function SignupForm() {
     const [state, action, pending] = useActionState(signin, initialState)
-
+    const searchParams = useSearchParams();
+    const demoEmail = searchParams.get('email');
+    const demopassword = searchParams.get('password');
+  
     return (
         <section className=" w-full h-screen  flex flex-col gap-2 justify-center items-center px-2">
             <main className='w-full md:w-1/3 flex flex-col gap-2 justify-center items-center border bg-white rounded-md p-5'>
@@ -29,7 +33,7 @@ export default function SignupForm() {
                 <form action={action} noValidate className='flex flex-col w-full'>
                     <div className='flex flex-col justify-center items-start'>
                         <Label htmlFor="email" className='text-left mb-2'>Email</Label>
-                        <Input id="email" name="email" placeholder="Enter your Email" defaultValue={state?.values?.email?.toString()} />
+                        <Input id="email" name="email" placeholder="Enter your Email" defaultValue={demoEmail ?? state?.values?.email?.toString()} />
                         <div className="self-start min-h-6 flex justify-center items-center">
                             {state?.errors?.email && <p className='text-xs text-red-500'>{state.errors.email}</p>}
                         </div>
@@ -37,7 +41,7 @@ export default function SignupForm() {
 
                     <div className='flex flex-col justify-center items-start'>
                         <Label htmlFor="password" className='text-left mb-2'>Password</Label>
-                        <Input id="password" name="password" type="password" placeholder='Enter Password' />
+                        <Input id="password" name="password" type="password" placeholder='Enter Password' defaultValue={demopassword ?? ""} />
                         <div className="my-4 w-full">
                             {state?.errors?.password && (
                                 <div className='self-start p-4 min-h-6 rounded-md border w-full flex flex-col justify-start items-start'>
@@ -51,7 +55,6 @@ export default function SignupForm() {
                             )}
                         </div>
                     </div>
-
                     <Button disabled={pending} type="submit">
                         Sign In
                     </Button>
