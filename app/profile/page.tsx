@@ -34,6 +34,7 @@ export default async function page() {
                             name="daily_goal"
                             placeholder="Enter your Dish"
                             required
+                            readOnly
                             aria-required="true"
                             aria-describedby="dish-name-error"
                             className="w-full border rounded mb-2 md:max-w-1/6"

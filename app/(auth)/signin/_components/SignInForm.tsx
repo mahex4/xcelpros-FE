@@ -26,6 +26,8 @@ export default function SignInForm({
 }: SignInFormProps) {
     const [state, action, pending] = useActionState(signin, initialState);
 
+    console.log('demo', demoEmail, demoPassword);
+
     return (
         <section className="w-full h-screen flex flex-col gap-2 justify-center items-center px-2">
             <main className='w-full md:w-1/3 flex flex-col gap-2 justify-center items-center border bg-card rounded-md p-5'>
@@ -43,6 +45,7 @@ export default function SignInForm({
                             name="email"
                             placeholder="Enter your Email"
                             defaultValue={demoEmail ?? state?.values?.email?.toString()}
+                            readOnly={demoEmail !== undefined}
                         />
                         <div className="self-start min-h-6 flex justify-center items-center">
                             {state?.errors?.email && (
@@ -59,6 +62,7 @@ export default function SignInForm({
                             type="password"
                             placeholder='Enter Password'
                             defaultValue={demoPassword ?? ""}
+                            readOnly={demoPassword !== undefined}
                         />
                         <div className="my-4 w-full">
                             {state?.errors?.password && (
@@ -74,7 +78,7 @@ export default function SignInForm({
                         </div>
                     </div>
                     <Button  disabled={pending} type="submit">
-                        Sign In
+                        {demoEmail === undefined ? "Sign In" : "Sign into demo account"}
                     </Button>
                 </form>
 
