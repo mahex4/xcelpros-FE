@@ -5,6 +5,12 @@ import FloatingHeader from "@/components/FloatingHeader";
 import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import CalorieBar from "./_components/CalorieBar";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "History",
+    description: "View your meals",
+  };
 
 export default async function MealHistory() {
     let groupedMeals: GroupedMeals | null = null;

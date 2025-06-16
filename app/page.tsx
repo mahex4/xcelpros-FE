@@ -2,15 +2,11 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import InfoBarLeft from "./_components/InfoBarLeft";
-import { getCurrentUser } from "@/lib/auth";
+import { getUserFromToken } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
-export const metadata = {
-  title: "Calorie tracker",
-  description: "Track Your Nutrition Smarter",
-};
 export default async function Home() {
-    const user = await getCurrentUser();
+  const user = await getUserFromToken();
 
     if (user) redirect('/dashboard');
 

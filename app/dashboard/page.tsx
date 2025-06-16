@@ -3,6 +3,12 @@ import { getCurrentUser } from '@/lib/auth';
 import CalorieForm from './_components/CalorieForm';
 import TodaySegment from './_components/TodaySegment';
 import FloatingHeader from '@/components/FloatingHeader';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+title: "Dashboard",
+description: "Manage Your Nutrition Smarter",
+};
 
 export default async function DashboardPage() {
     const user = await getCurrentUser();

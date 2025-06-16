@@ -4,6 +4,12 @@ import { Label } from "@/components/ui/label";
 import { logout } from "../(auth)/signin/actions";
 import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Profile",
+    description: "Manage your data here",
+  };
 
 export default async function page() {
     const user = await getCurrentUser();
