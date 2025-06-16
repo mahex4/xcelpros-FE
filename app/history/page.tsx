@@ -42,8 +42,8 @@ export default async function MealHistory() {
             <div className="flex flex-col md:flex-row gap-4 w-full overflow-x-auto pb-4 h-full"> 
                 {groupedMeals.map(group => (
                     <div key={group.date} className="flex flex-col min-w-[20vw] md:max-w-[20vw] gap-4 h-full">
-                        <div className="flex items-center sticky top-0 z-10 bg-white p-4 border rounded-md">
-                            <h4 className="font-semibold text-gray-700">
+                        <div className="flex items-center justify-between sticky top-0 z-10 bg-card p-4 border rounded-md">
+                            <h4 className="font-semibold ">
                                 {new Date(group.date).toLocaleDateString('en-US', {
                                     weekday: 'long',
                                     year: 'numeric',

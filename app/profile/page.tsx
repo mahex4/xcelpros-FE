@@ -19,7 +19,7 @@ export default async function page() {
     return (
         <main className="w-full flex flex-col gap-4 p-2 md:pl-0">
             <FloatingHeader />
-            <section className="bg-white w-full p-4 rounded-md">
+            <section className="bg-card w-full p-4 rounded-md">
                 <h1 className=" font-bold text-xl">Daily Goal</h1>
                 <form
                     // action={}
@@ -54,7 +54,7 @@ export default async function page() {
                    </div>
                 </form>
             </section>
-            <section className="bg-white w-full p-4 rounded-md">
+            <section className="bg-card w-full p-4 rounded-md">
                 <h1 className=" font-bold text-xl">Logout of your account</h1>
                 <form
                     action={logout}

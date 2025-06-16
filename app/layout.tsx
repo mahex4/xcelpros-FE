@@ -3,6 +3,7 @@ import { Outfit } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
 import { Toaster } from "@/components/ui/sonner"
+import { Providers } from "@/components/Providers";
 
 const outfit = Outfit({ subsets: ['latin'] })
 
@@ -17,21 +18,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${outfit.className} antialiased w-full`}
       >
-        <div className="gradient-bg">
-          <div className="gradient-blob blob-1"></div>
-          <div className="gradient-blob blob-2"></div>
-          <div className="gradient-blob blob-3"></div>
-          <div className="gradient-blob blob-4"></div>
-        </div>
-        <div className="flex flex-col md:flex-row w-full">
-          <Sidebar />
-          {children}
-          <Toaster />
-        </div>
+        <Providers>
+          <div className="gradient-bg">
+            <div className="gradient-blob blob-1"></div>
+            <div className="gradient-blob blob-2"></div>
+            <div className="gradient-blob blob-3"></div>
+            <div className="gradient-blob blob-4"></div>
+          </div>
+          <div className="flex flex-col md:flex-row w-full">
+            <Sidebar />
+            {children}
+            <Toaster />
+          </div>
+        </Providers>
       </body>
     </html>
   );

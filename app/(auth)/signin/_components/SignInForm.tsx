@@ -28,7 +28,7 @@ export default function SignInForm({
 
     return (
         <section className="w-full h-screen flex flex-col gap-2 justify-center items-center px-2">
-            <main className='w-full md:w-1/3 flex flex-col gap-2 justify-center items-center border bg-white rounded-md p-5'>
+            <main className='w-full md:w-1/3 flex flex-col gap-2 justify-center items-center border bg-card rounded-md p-5'>
                 <div className="w-full flex flex-col gap-2 justify-center items-center">
                     <h1 className='text-2xl font-semibold'>Sign In</h1>
                     <p className='text-center text-sm'>
@@ -73,7 +73,7 @@ export default function SignInForm({
                             )}
                         </div>
                     </div>
-                    <Button disabled={pending} type="submit">
+                    <Button  disabled={pending} type="submit">
                         Sign In
                     </Button>
                 </form>

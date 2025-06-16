@@ -2,7 +2,7 @@ import { Meal } from "@/lib/types";
 
 export default function MealCard({ meal }: { meal: Meal }) {
     return (
-        <div className="p-3 border rounded-md bg-white">
+        <div className="p-3 border rounded-md bg-card">
             <div className="flex justify-between">
                 <h5 className="font-medium whitespace-nowrap max-w-64 text-ellipsis overflow-hidden">{meal.dish_name}</h5>
                 <span className="text-sm text-gray-500 whitespace-nowrap">

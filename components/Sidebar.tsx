@@ -23,7 +23,7 @@ export default function Sidebar() {
 
     return (
         <div className="md:h-screen fixed md:static bottom-0 w-full md:w-auto md:bg-transparent p-2">
-            <nav className="md:hidden flex justify-around w-full bg-slate-900 p-2 rounded-xl">
+            <nav className="md:hidden flex justify-around w-full bg-slate-900 dark:bg-card p-2 rounded-xl">
                 {navItems.map((item) => (
                     <Link
                         key={item.label}
@@ -37,7 +37,7 @@ export default function Sidebar() {
             </nav>
 
             <motion.nav
-                className="hidden md:flex flex-col gap-3 h-full font-semibold text-white bg-slate-900 p-2 rounded-md"
+                className="hidden md:flex flex-col gap-3 h-full font-semibold text-white bg-slate-900 dark:bg-card p-2 rounded-md"
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
                 initial={{ width: "64px" }}

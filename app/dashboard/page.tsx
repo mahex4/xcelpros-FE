@@ -21,7 +21,7 @@ export default async function DashboardPage() {
                 <div className=" hidden md:block">
                     <FloatingHeader />
                 </div>
-                <div className=" bg-white w-full h-full flex flex-col justify-center items-center p-4 rounded-md border mb-24 md:mb-auto">
+                <div className=" bg-white dark:bg-[rgba(38,38,38,0.8)] w-full h-full flex flex-col justify-center items-center p-4 rounded-md border mb-24 md:mb-auto">
                     <h1>Welcome {user.firstName}</h1>
                     <CalorieForm />
                 </div>

@@ -27,12 +27,12 @@ export default function SignupForm() {
                 <BackButton />
                 <span className=' font-medium text-xl'>Home</span>
             </div>
-            <main className='w-full md:w-1/3 flex flex-col gap-2 justify-center items-center border bg-white rounded-md p-5'>
+            <main className='w-full md:w-1/3 flex flex-col gap-2 justify-center items-center border bg-card rounded-md p-5'>
                 <div className="flex flex-col gap-2 justify-center items-center">
                     <h1 className=' text-2xl font-semibold'>Sign Up</h1>
                     <p className='text-center text-sm'>Sign Up to start tracking calories <br />staying on top of your meal plan</p>
                 </div>
-                <form action={action} noValidate className='flex flex-col w-full bg-white rounded-md p-5'>
+                <form action={action} noValidate className='flex flex-col w-full rounded-md p-5'>
                     <div className='flex flex-col justify-center items-center'>
                         <label htmlFor="firstName" className='sr-only'>First Name</label>
                         <Input id="firstName" name="firstName" placeholder="First Name" defaultValue={state.values?.firstName?.toString() ?? ''} />
@@ -75,7 +75,7 @@ export default function SignupForm() {
                         </div>
                     </div>
 
-                    <Button disabled={pending} type="submit">
+                    <Button variant="default" disabled={pending} type="submit">
                         Sign Up
                     </Button>
                 </form>
