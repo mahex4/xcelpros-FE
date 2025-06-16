@@ -8,7 +8,7 @@ import useDebounce from "@/hooks/useDebounce";
 
 export default function Sidebar() {
     const [hovered, setHovered] = useState(false);
-    const debouncedHover = useDebounce(hovered, 300);
+    const debouncedHover = useDebounce(hovered, 1000);
     const pathname = usePathname();
 
     if (pathname === "/" || pathname === "/signin" || pathname === "/signup") {
@@ -51,13 +51,13 @@ export default function Sidebar() {
                     <Link
                         key={item.label}
                         href={item.href}
-                        className="flex w-full items-center justify-start gap-2 hover:bg-slate-500 hover:text-slate-900 p-2 rounded-sm min-w-max"
+                        className="flex w-full items-center justify-start hover:bg-slate-500 hover:text-slate-900 p-2 rounded-sm min-w-max"
                     >
                         <item.icon strokeWidth={2.5} />
                         <AnimatePresence>
                             {debouncedHover && (
                                 <motion.span
-                                    className="hidden md:inline"
+                                    className="hidden pl-2 md:inline"
                                     initial={{ opacity: 0, x: -10 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     exit={{ opacity: 0, x: -10 }}

@@ -56,7 +56,7 @@ export default async function MealHistory() {
                             </span>
                         </div>
                         <CalorieBar calorieSummary={group.calorieSummary} />
-                        <div className="md:space-y-3 overflow-scroll md:overflow-y-auto md:h-[calc(100vh-200px)]">
+                        <div className="md:space-y-3 overflow-scroll flex flex-col gap-2 md:gap-0 md:overflow-y-auto md:h-[calc(100vh-200px)]">
                             {group.meals.map((meal, idx) => (
                                 <MealCard meal={meal} key={`meal-card-${meal.dish_name}-${idx}`} />
                             ))}

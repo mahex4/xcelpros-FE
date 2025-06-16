@@ -16,7 +16,7 @@ export default async function DashboardPage() {
     if (!user) redirect('/signin');
 
     return (
-        <div className='flex flex-col-reverse md:flex-row gap-2 w-full md:h-screen p-2 pl-0'>
+        <div className='flex flex-col-reverse md:flex-row gap-2 w-full md:h-screen p-2 md:pl-0'>
             <div className="flex flex-col gap-2 w-full">
                 <div className=" hidden md:block">
                     <FloatingHeader />
