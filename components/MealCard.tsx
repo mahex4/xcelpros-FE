@@ -5,7 +5,7 @@ export default function MealCard({ meal }: { meal: Meal }) {
         <div className="p-3 border rounded-md bg-white">
             <div className="flex justify-between">
                 <h5 className="font-medium whitespace-nowrap max-w-64 text-ellipsis overflow-hidden">{meal.dish_name}</h5>
-                <span className="text-sm text-gray-500">
+                <span className="text-sm text-gray-500 whitespace-nowrap">
                     {new Date(meal.date).toLocaleTimeString([], {
                         hour: '2-digit',
                         minute: '2-digit'

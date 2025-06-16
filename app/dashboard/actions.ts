@@ -118,7 +118,7 @@ interface DayWiseMeal {
     }
 }
 
-export async function getMeals(revalidate: boolean = false): Promise<GroupedMeals> {
+export async function getMeals(): Promise<GroupedMeals> {
     const cookie = await cookies();
     const token = cookie.get("token")?.value;
     const DAILY_CALORIE_TARGET = 2000;
@@ -137,7 +137,8 @@ export async function getMeals(revalidate: boolean = false): Promise<GroupedMeal
                     Authorization: `Bearer ${token}`,
                 },
                 next: {
-                    tags: ['meals']
+                    tags: ['meals'],
+                    revalidate: 0
                 }
             }
         );
