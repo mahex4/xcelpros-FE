@@ -46,10 +46,10 @@ export default async function page() {
                         <Button
                             type="submit"
                             aria-label="Calculate calories"
-                            className="w-full"
+                            className="w-full text-md"
                             disabled
                         >
-                            Calculate Calories
+                            Set Target
                         </Button>
 
                    </div>
@@ -65,7 +65,7 @@ export default async function page() {
                     <Button
                         type="submit"
                         aria-label="Calculate calories"
-                        className="w-full"
+                        className="w-full text-md"
                     >
                         Logout
                     </Button>
