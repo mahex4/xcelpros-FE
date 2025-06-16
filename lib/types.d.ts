@@ -19,6 +19,7 @@ export type SaveMealState = {
 export type GroupedMeals = {
     date: string;
     meals: Meal[];
+    calorieSummary: CalorieSummary
 }[];
 
 export type Meal = {
@@ -28,4 +29,11 @@ export type Meal = {
     total_calories: number;
     source?: string;
     date: Date;
+}
+
+export interface CalorieSummary {
+    consumed: number;
+    left: number;
+    exceeded: number;
+    target: number;
 }

@@ -1,6 +1,7 @@
 "use server";
 
 import { CaloriesFormState, CaloriesResponse, GroupedMeals, Meal, SaveMealState } from "@/lib/types";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 export async function getCalories(
@@ -87,13 +88,14 @@ export async function saveMeal(
         );
 
         if (!response.ok) {
-            // Try to get error details from response
             const errorData = await response.json().catch(() => ({}));
             return {
                 error: errorData.error || "Failed to save meal",
                 success: false,
             };
         }
+
+        revalidateTag('meals');
 
         return { error: null, success: true };
     } catch (error) {
@@ -116,7 +118,7 @@ interface DayWiseMeal {
     }
 }
 
-export async function getMeals(): Promise<GroupedMeals> {
+export async function getMeals(revalidate: boolean = false): Promise<GroupedMeals> {
     const cookie = await cookies();
     const token = cookie.get("token")?.value;
     const DAILY_CALORIE_TARGET = 2000;
@@ -134,6 +136,9 @@ export async function getMeals(): Promise<GroupedMeals> {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
                 },
+                next: {
+                    tags: ['meals']
+                }
             }
         );
 
@@ -145,7 +150,6 @@ export async function getMeals(): Promise<GroupedMeals> {
         const data = await response.json();
         const mealsData = data.meals || [];
 
-        // Add calorie calculations to each day's data
         const enhancedMeals = mealsData.map((day: DayWiseMeal) => {
             const totalCalories = day.meals.reduce(
                 (sum: number, meal: Meal) => sum + meal.total_calories,

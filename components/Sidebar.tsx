@@ -7,7 +7,7 @@ import { useState } from "react";
 
 export default function Sidebar() {
     const [hovered, setHovered] = useState(false)
-    const debouncedHover = useDebounce(hovered, 500)
+    const debouncedHover = useDebounce(hovered, 1000)
     const pathname = usePathname();
 
     if (pathname === "/" || pathname === "/signin" || pathname === "/signup") {

@@ -15,6 +15,7 @@ import {
     ChartTooltip,
     ChartTooltipContent,
 } from "@/components/ui/chart"
+import { CalorieSummary } from "@/lib/types"
 
 export const description = "A radial chart with stacked sections"
 
@@ -34,11 +35,13 @@ const chartConfig = {
 } satisfies ChartConfig
 
 
-export function DailyQuota({ currentCalories }: { currentCalories: number }) {
-    const dailyGoal = 2000;
-    const consumed = Math.min(currentCalories, dailyGoal);
-    const rest = Math.max(0, dailyGoal - currentCalories);
-    const exceed = Math.max(0, currentCalories - dailyGoal);
+export function DailyQuota({ calorieSummary }: {
+    calorieSummary: CalorieSummary
+}) {
+    const dailyGoal = calorieSummary.target;
+    const consumed = calorieSummary.consumed;
+    const rest = calorieSummary.left;
+    const exceed = calorieSummary.exceeded;
 
     const chartData = [{
         current: consumed,
@@ -53,7 +56,7 @@ export function DailyQuota({ currentCalories }: { currentCalories: number }) {
             <CardHeader className="items-center pb-0">
                 <CardTitle>Daily Calorie Progress</CardTitle>
                 <CardDescription>
-                    {currentCalories >= dailyGoal ? "Goal exceeded!" : "Progress toward daily goal"}
+                    {consumed >= dailyGoal ? "Goal exceeded!" : "Progress toward daily goal"}
                 </CardDescription>
             </CardHeader>
             <CardContent className="flex items-center pb-0 -mb-24">
@@ -82,14 +85,14 @@ export function DailyQuota({ currentCalories }: { currentCalories: number }) {
                                                     y={(viewBox.cy || 0) - 16}
                                                     className="fill-foreground text-2xl font-bold"
                                                 >
-                                                    {currentCalories.toLocaleString()}
+                                                    {consumed.toLocaleString()}
                                                 </tspan>
                                                 <tspan
                                                     x={viewBox.cx}
                                                     y={(viewBox.cy || 0) + 4}
                                                     className="fill-muted-foreground"
                                                 >
-                                                    {currentCalories >= dailyGoal ? "kcal (exceeded)" : "kcal consumed"}
+                                                    {consumed >= dailyGoal ? "kcal (exceeded)" : "kcal consumed"}
                                                 </tspan>
                                             </text>
                                         )

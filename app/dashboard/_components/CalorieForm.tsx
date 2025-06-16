@@ -2,10 +2,11 @@
 import { Button } from "@/components/ui/button";
 import { getCalories, saveMeal } from "../actions";
 import { CaloriesFormState, SaveMealState } from "@/lib/types";
-import { useMealStore } from "@/stores/mealStore";
 import { useActionState, useState, useTransition } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const initialState: CaloriesFormState = {
     error: null,
@@ -19,7 +20,7 @@ export default function CalorieForm() {
         success: false,
     });
     const [isSaving, startSaving] = useTransition();
-    const triggerRefresh = useMealStore(state => state.triggerRefresh); 
+    const router = useRouter();
 
     const handleSaveMeal = () => {
         if (!state.data) return;
@@ -31,8 +32,11 @@ export default function CalorieForm() {
             setSaveState(result);
 
             if (result.success) {
-                triggerRefresh();
+                toast.success("Meal added successfully")
+                router.refresh();
+                await fetch('/api/revalidate?tag=meals');
             }
+    
         });
     };
     
@@ -119,11 +123,6 @@ export default function CalorieForm() {
                         {saveState.error && (
                             <p className="text-red-500" role="alert">
                                 {saveState.error}
-                            </p>
-                        )}
-                        {saveState.success && (
-                            <p className="text-green-500" role="status">
-                                Meal added successfully!
                             </p>
                         )}
                     </div>
