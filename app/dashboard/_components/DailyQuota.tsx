@@ -129,19 +129,19 @@ export function DailyQuota({ calorieSummary }: {
                 <CardFooter className="flex justify-between gap-4 pt-6 -mt-12">
                     <div className="flex flex-col items-center">
                         <span className="text-sm text-muted-foreground">Consumed</span>
-                        <span className="text-md font-bold" style={{ color: 'var(--chart-1)' }}>
+                        <span className="text-md whitespace-nowrap font-bold" style={{ color: 'var(--chart-1)' }}>
                             {consumed.toLocaleString()} kcal
                         </span>
                     </div>
                     <div className="flex flex-col items-center">
                         <span className="text-sm text-muted-foreground">Remaining</span>
-                        <span className="text-md font-bold" style={{ color: 'var(--chart-2)' }}>
+                        <span className="text-md whitespace-nowrap font-bold" style={{ color: 'var(--chart-2)' }}>
                             {rest.toLocaleString()} kcal
                         </span>
                     </div>
                     <div className="flex flex-col items-center">
                         <span className="text-sm text-muted-foreground">Exceeded</span>
-                        <span className="text-md font-bold" style={{ color: 'var(--chart-3)' }}>
+                        <span className="text-md whitespace-nowrap font-bold" style={{ color: 'var(--chart-3)' }}>
                             {exceed.toLocaleString()} kcal
                         </span>
                     </div>
