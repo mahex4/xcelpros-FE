@@ -35,8 +35,8 @@ export default async function Home() {
               </div>
               Already a member? <Link href="/signin"><Button variant="link">Sign In</Button></Link>
             </div>
-            <div className="flex flex-col gap-8">
-              <h2 className="text-3xl font-bold text-left">
+            <div className="flex flex-col gap-4">
+              <h2 className="text-2xl font-bold text-left">
                 Features
               </h2>
               <InfoBarLeft />
