@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { getUserFromToken } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/auth";
 import Link from "next/link";
 
 export default async function HomeButton() {
-    const user = await getUserFromToken();
+    const user = await getCurrentUser();
 
     if (user) return (
         <div>

@@ -99,7 +99,7 @@ export default function CalorieForm() {
             {state?.data && (
                 <div className="flex flex-col gap-2 w-full">
                     <div
-                        className="mt-4 p-4 bg-card rounded-md w-full"
+                        className="mt-4 p-4 bg-card rounded-md w-full border"
                         role="status"
                         aria-live="polite"
                     >

@@ -6,6 +6,8 @@ import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import CalorieBar from "./_components/CalorieBar";
 import { Metadata } from "next";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
     title: "History",
@@ -29,8 +31,19 @@ export default async function MealHistory() {
         return <div className="text-red-500">{error}</div>;
     }
 
-    if (!groupedMeals) {
-        return <div>No meals recorded yet</div>;
+    if (!groupedMeals || groupedMeals.length === 0) {
+        return (
+        <div className="p-2 w-screen h-screen flex flex-col gap-2 md:w-[95vw] pb-24 md:pb-4">
+            <div className="pr-2">
+                <FloatingHeader />
+            </div>
+            <h3 className="text-lg font-bold my-2">Your Meal History</h3> 
+            <div className=" w-full h-full flex flex-col gap-4 justify-center items-center font-semibold text-2xl text-black/40 dark:text-white/40">
+                    <div className="">No meals recorded yet</div>
+                    <Link className="w-full md:w-auto" href="/dashboard"><Button variant="default" className="w-full md:w-auto text-xl">Add Meal</Button></Link>
+            </div>
+
+        </div>)
     }
 
     return (

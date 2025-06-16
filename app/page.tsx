@@ -29,7 +29,8 @@ export default async function Home() {
               <InfoBarLeft />
             </div>
           </div>
-          <Image width={400} height={800} src={'/hero.webp'} className=" rounded-md hidden md:block" alt='hero image' />
+          <Image width={400} height={800} src={'/hero.webp'} className=" rounded-md hidden md:block dark:hidden" alt='hero image' />
+          <Image width={400} height={500} src={'/23.jpg'} className=" rounded-md  hidden dark:md:block" alt='hero image' />
         </section>
       </main>
     </div>
