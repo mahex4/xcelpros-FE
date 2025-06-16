@@ -2,8 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { logout } from "../(auth)/signin/actions";
+import { getCurrentUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
-export default function page() {
+export default async function page() {
+    const user = await getCurrentUser();
+
+    if (!user) redirect('/signin');
     return (
         <main className="w-full flex flex-col gap-4 p-2">
             <section className="bg-white w-full p-4 rounded-md">

@@ -102,17 +102,17 @@ export function DailyQuota({ calorieSummary }: {
                             />
                         </PolarRadiusAxis>
                         <RadialBar
-                            dataKey="current"
-                            stackId="a"
-                            cornerRadius={5}
-                            fill="var(--color-current)"
-                            className="stroke-transparent stroke-2"
-                        />
-                        <RadialBar
                             dataKey="rest"
                             fill="var(--color-rest)"
                             stackId="a"
                             cornerRadius={5}
+                            className="stroke-transparent stroke-2"
+                        />
+                        <RadialBar
+                            dataKey="current"
+                            stackId="a"
+                            cornerRadius={5}
+                            fill="var(--color-current)"
                             className="stroke-transparent stroke-2"
                         />
                         <RadialBar
@@ -126,22 +126,22 @@ export function DailyQuota({ calorieSummary }: {
                 </ChartContainer>
             </CardContent>
             <CardFooter>
-                <CardFooter className="flex justify-between gap-4 pt-6">
+                <CardFooter className="flex justify-between gap-4 pt-6 -mt-12">
                     <div className="flex flex-col items-center">
                         <span className="text-sm text-muted-foreground">Consumed</span>
-                        <span className="text-xl font-bold" style={{ color: 'var(--chart-1)' }}>
+                        <span className="text-md font-bold" style={{ color: 'var(--chart-1)' }}>
                             {consumed.toLocaleString()} kcal
                         </span>
                     </div>
                     <div className="flex flex-col items-center">
                         <span className="text-sm text-muted-foreground">Remaining</span>
-                        <span className="text-xl font-bold" style={{ color: 'var(--chart-2)' }}>
+                        <span className="text-md font-bold" style={{ color: 'var(--chart-2)' }}>
                             {rest.toLocaleString()} kcal
                         </span>
                     </div>
                     <div className="flex flex-col items-center">
                         <span className="text-sm text-muted-foreground">Exceeded</span>
-                        <span className="text-xl font-bold" style={{ color: 'var(--chart-3)' }}>
+                        <span className="text-md font-bold" style={{ color: 'var(--chart-3)' }}>
                             {exceed.toLocaleString()} kcal
                         </span>
                     </div>

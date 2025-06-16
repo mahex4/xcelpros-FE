@@ -2,8 +2,14 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import InfoBarLeft from "./_components/InfoBarLeft";
+import { getCurrentUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
-export default function Home() {
+export default async function Home() {
+    const user = await getCurrentUser();
+
+    if (user) redirect('/dashboard');
+
   return (
     <div className="w-full font-[family-name:var(--font-geist-sans)] px-4 md:px-12">
       <main className="flex flex-col gap-[32px] w-full ">

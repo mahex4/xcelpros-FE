@@ -4,6 +4,7 @@ import { getMeals } from "../dashboard/actions";
 import FloatingHeader from "@/components/FloatingHeader";
 import { getCurrentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import CalorieBar from "./_components/CalorieBar";
 
 export default async function MealHistory() {
     let groupedMeals: GroupedMeals | null = null;
@@ -27,15 +28,15 @@ export default async function MealHistory() {
     }
 
     return (
-        <div className="m-2 h-screen flex flex-col gap-2 w-[95vw] mb-32 md:mb-auto">
+        <div className="p-2 w-screen h-screen flex flex-col gap-2 md:w-[95vw] pb-32 md:mb-auto">
             <div className="pr-2">
                 <FloatingHeader />
             </div>
             <h3 className="text-lg font-bold my-2">Your Meal History</h3>
             <div className="flex flex-col md:flex-row gap-4 w-full overflow-x-auto pb-4"> 
                 {groupedMeals.map(group => (
-                    <div key={group.date} className="flex flex-col min-w-[20vw] md:max-w-[20vw] h-full">
-                        <div className="flex items-center mb-3 sticky top-0 z-10 bg-white p-4 border rounded-md">
+                    <div key={group.date} className="flex flex-col min-w-[20vw] md:max-w-[20vw] gap-4 h-full">
+                        <div className="flex items-center sticky top-0 z-10 bg-white p-4 border rounded-md">
                             <h4 className="font-semibold text-gray-700">
                                 {new Date(group.date).toLocaleDateString('en-US', {
                                     weekday: 'long',
@@ -48,8 +49,8 @@ export default async function MealHistory() {
                                 {group.meals.length} meal{group.meals.length > 1 ? 's' : ''}
                             </span>
                         </div>
-
-                        <div className="space-y-3 md:overflow-y-auto md:h-[calc(100vh-200px)]">
+                        <CalorieBar calorieSummary={group.calorieSummary} />
+                        <div className="md:space-y-3 overflow-scroll md:overflow-y-auto md:h-[calc(100vh-200px)]">
                             {group.meals.map((meal, idx) => (
                                 <MealCard meal={meal} key={`meal-card-${meal.dish_name}-${idx}`} />
                             ))}
