@@ -13,13 +13,14 @@ export default async function Home() {
         <section className="bg-gradient-to-br w-full md:px-4 h-screen flex flex-col gap-4 md:flex-row items-center justify-between md:justify-between">
           <div id="left-holder" className=" flex flex-col gap-6 py-24">
             <div className=" text-left">
-              <h1 className=" md:3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              <h1 className=" text-3xl md:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
                 Track Your Nutrition <span className="text-slate-900 dark:text-slate-100">Smarter</span>
               </h1>
               <p className="text-xl text-gray-600 dark:text-slate-100 max-w-2xl mx-auto mb-8">
                 Achieve your health goals with precise calorie tracking and personalized insights
               </p>
             </div>
+            <Image width={400} height={800} src={'/mobile1.webp'} className=" rounded-md block md:hidden" alt='hero image' />
             <HomeButton />
             <div className="flex flex-col gap-4">
               <h2 className="text-2xl font-bold text-left">
@@ -28,7 +29,7 @@ export default async function Home() {
               <InfoBarLeft />
             </div>
           </div>
-          <Image width={400} height={800} src={'/hero.webp'} className=" rounded-md" alt='hero image' />
+          <Image width={400} height={800} src={'/hero.webp'} className=" rounded-md hidden md:block" alt='hero image' />
         </section>
       </main>
     </div>
