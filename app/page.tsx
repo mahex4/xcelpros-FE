@@ -2,10 +2,12 @@ import Image from "next/image";
 import InfoBarLeft from "./_components/InfoBarLeft";
 import HomeButton from "./_components/HomeButton";
 import { ModeToggle } from "@/components/ModeToggle";
+import { Suspense } from "react";
+import { BasicHomeButton } from "./_components/BasicHomeButton";
 
 export default async function Home() {
   return (
-    <div className="w-full font-[family-name:var(--font-geist-sans)] px-4 md:px-12">
+    <div className="w-full px-4 md:px-12">
       <div className="fixed top-4 right-4 p-2">
         <ModeToggle />
       </div>
@@ -20,8 +22,10 @@ export default async function Home() {
                 Achieve your health goals with precise calorie tracking and personalized insights
               </p>
             </div>
-            <Image width={400} height={800} src={'/mobile1.webp'} className=" rounded-md block md:hidden" alt='hero image' />
-            <HomeButton />
+            <Image width={400} height={200} src={'/mobile1.webp'} loading="eager" priority sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 400px" className=" rounded-md block md:hidden" alt='hero image' />
+            <Suspense fallback={<BasicHomeButton />}>
+              <HomeButton />
+            </Suspense>
             <div className="flex flex-col gap-4">
               <h2 className="text-2xl font-bold text-left">
                 Features
@@ -29,8 +33,8 @@ export default async function Home() {
               <InfoBarLeft />
             </div>
           </div>
-          <Image width={400} height={800} src={'/hero.webp'} className=" rounded-md hidden md:block dark:hidden" alt='hero image' />
-          <Image width={400} height={500} src={'/23.jpg'} className=" rounded-md  hidden dark:md:block" alt='hero image' />
+          <Image width={400} height={800} src={'/hero.webp'} loading="eager" priority sizes="(min-width: 768px) 400px, 0px" className=" rounded-md hidden md:block dark:hidden" alt='hero image' />
+          <Image width={400} height={800} src={'/23.jpg'} loading="eager" priority sizes="(min-width: 768px) 400px, 0px" className=" rounded-md  hidden dark:md:block" alt='hero image' />
         </section>
       </main>
     </div>

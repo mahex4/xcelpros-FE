@@ -10,7 +10,10 @@ export default async function HomeButton() {
             <div className=" text-left">
                 <Link className="w-full md:w-auto" href="/dashboard"><Button className="w-full md:w-auto text-xl">Go To Dashboard</Button></Link>
             </div>
-    </div>
+            <div className=" h-12 flex justify-start items-center">
+                You are already signed in
+            </div>
+        </div>
     )
 
     return (

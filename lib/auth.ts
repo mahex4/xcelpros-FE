@@ -32,7 +32,9 @@ export async function getCurrentUser(): Promise<MeResponse | null> {
             Cookie: cookie.get('cookie') ?? '',
         },
         credentials: 'include',
-        cache: 'no-store',
+        next: {
+            revalidate: 10
+        }
     });
 
     if (!res.ok) return null;
