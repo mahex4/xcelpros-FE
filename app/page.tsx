@@ -5,7 +5,7 @@ import { ModeToggle } from "@/components/ModeToggle";
 import { Suspense } from "react";
 import { BasicHomeButton } from "./_components/BasicHomeButton";
 
-export default async function Home() {
+export default function Home() {
   return (
     <div className="w-full px-4 md:px-12">
       <div className="fixed top-4 right-4 p-2">

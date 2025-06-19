@@ -31,10 +31,7 @@ export async function getCurrentUser(): Promise<MeResponse | null> {
         headers: {
             Cookie: cookie.get('cookie') ?? '',
         },
-        credentials: 'include',
-        next: {
-            revalidate: 10
-        }
+        credentials: 'include'
     });
 
     if (!res.ok) return null;

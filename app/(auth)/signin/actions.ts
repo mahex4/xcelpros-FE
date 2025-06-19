@@ -14,9 +14,6 @@ export async function signin(state: SignInFormState, formData: FormData) {
     })
 
 
-    console.log('valDat', validatedFields);
-
-
     if (!validatedFields.success) {
         return {
             errors: validatedFields.error.flatten().fieldErrors,
@@ -45,7 +42,7 @@ export async function signin(state: SignInFormState, formData: FormData) {
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
         path: '/',
-        maxAge: 60 * 60 * 24 * 7, // 7 days
+        maxAge: 60 * 60
     });
 
     redirect("/dashboard");
