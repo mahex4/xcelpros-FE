@@ -5,17 +5,18 @@ export async function getUserFromToken() {
     const cookie = await cookies()
     const token = cookie.get('token')?.value;
 
-    console.log('token fetch', token);
-
     if (!token) return null;
 
     try {
-        const decoded = jwtDecode(token);
+        const decoded = jwtDecode(token) as { exp?: number };
+        if (decoded.exp && decoded.exp * 1000 < Date.now()) {
+            return null;
+        }
         return decoded;
     } catch {
         return null;
     }
-}
+  }
 
 type MeResponse = {
     _id: string;
