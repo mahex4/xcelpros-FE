@@ -25,17 +25,18 @@ export default function SignInForm({
     demoPassword
 }: SignInFormProps) {
     const [state, action, pending] = useActionState(signin, initialState);
-
-    console.log('demo', demoEmail, demoPassword);
+    const demoState = demoEmail === undefined
 
     return (
         <section className="w-full h-screen flex flex-col gap-2 justify-center items-center px-2">
             <main className='w-full md:w-1/3 flex flex-col gap-2 justify-center items-center border bg-card rounded-md p-5'>
                 <div className="w-full flex flex-col gap-2 justify-center items-center">
-                    <h1 className='text-2xl font-semibold'>Sign In</h1>
-                    <p className='text-center text-sm'>
+                    <h1 className='text-2xl font-semibold'>{!demoState ? "View Demo" : "Sign In"}</h1>
+                    {demoState  ? <p className='text-center text-sm'>
                         Sign in to access your dashboard and <br />continue tracking your progress
-                    </p>
+                    </p> : <p className='text-center text-sm'>
+                        Sign in to the demo account and <br />see the app in its fully working flow
+                    </p>}
                 </div>
                 <form action={action} noValidate className='flex flex-col w-full'>
                     <div className='flex flex-col justify-center items-start'>
@@ -78,7 +79,7 @@ export default function SignInForm({
                         </div>
                     </div>
                     <Button  disabled={pending} type="submit">
-                        {demoEmail === undefined ? "Sign In" : "Sign into demo account"}
+                        {demoState ? "Sign In" : "Sign into demo account"}
                     </Button>
                 </form>
 
