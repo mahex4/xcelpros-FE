@@ -44,9 +44,9 @@ export const formatDate = (date: Date) => {
 };
 
 
-const API_URL = "https://api.nal.usda.gov/fdc/v1/foods/search";
 const API_KEY = process.env.USDA_API_KEY!;
-const PAGE_SIZE = process.env.USDA_PAGE_SIZE ?? 20;
+const PAGE_SIZE = process.env.USDA_PAGE_SIZE ?? 100;
+const USDA_SEARCH_URL = "https://api.nal.usda.gov/fdc/v1/foods/search";
 
 type FoodItem = {
   fdcId: number
@@ -59,35 +59,62 @@ type FoodItem = {
 };
 
 export function sanitizeDishName(raw: string): string {
-  return raw.replace(/[^\w\s]/g, "").replace(/\s+/g, " ");
+  return raw
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 export function pickBestMatches(foods: FoodItem[], query: string): FoodItem[] {
   const q = query.trim().toLowerCase();
+  const tokens = q.split(/\s+/);
+
+  const allWordMatches = foods.filter(food =>
+    tokens.every(tok => food.description.toLowerCase().includes(tok))
+  );
+
+  const results: FoodItem[] = [];
+  const usedIds = new Set<number>();
+
+  const addUniqueItems = (items: FoodItem[]) => {
+    for (const item of items) {
+      if (usedIds.has(item.fdcId)) continue;
+      if (results.length >= 5) return;
+      usedIds.add(item.fdcId);
+      results.push(item);
+    }
+  };
+
+  addUniqueItems(allWordMatches);
+  if (results.length >= 5) return results;
 
   const prefixMatches = foods.filter(food =>
     food.description.toLowerCase().startsWith(q)
   );
-
-  if (prefixMatches.length >= 5) {
-    return prefixMatches.slice(0, 5);
-  }
+  addUniqueItems(prefixMatches);
+  if (results.length >= 5) return results;
 
   const fuse = new Fuse(foods, {
-    keys: ["description"],
-    threshold: 0.4,
+    keys: [{
+      name: 'description',
+      weight: 0.9,
+      getFn: (item) => item.description.toLowerCase()
+    }],
+    includeScore: true,
+    minMatchCharLength: 2,
+    threshold: 0.4, // Balanced threshold
     ignoreLocation: true,
   });
 
-  const fuzzyResults = fuse.search(q)
-    .map(result => result.item)
-    .filter(item =>
-      !prefixMatches.find(pm => pm.fdcId === item.fdcId)
-    );
+  const fuseResults = fuse.search(q)
+    .filter(r => r.score! < 0.6)
+    .map(r => r.item)
+    .filter(item => !usedIds.has(item.fdcId));
 
-  return [...prefixMatches, ...fuzzyResults].slice(0, 5);
+  addUniqueItems(fuseResults);
+
+  return results;
 }
-
 
 
 export interface MinimalSearchItem {
@@ -96,32 +123,37 @@ export interface MinimalSearchItem {
 }
 
 export async function searchFood(query: string): Promise<MinimalSearchItem[]> {
-  const url = new URL(API_URL);
   const dish_name = sanitizeDishName(query);
-  url.searchParams.append('api_key', API_KEY!);
-  url.searchParams.append('query', dish_name);
-  url.searchParams.append('pageSize', String(PAGE_SIZE));
+  if (!dish_name) return [];
 
-  const res = await fetch(url.toString());
-  if (!res.ok) {
-    console.error(`Failed to fetch food data: ${res.statusText}`);
+  try {
+    const url = `${USDA_SEARCH_URL}?api_key=${API_KEY}`;
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query: dish_name,
+        pageSize: Number(PAGE_SIZE),
+        dataType: ["Foundation", "Branded"],
+        requireAllWords: true,
+      }),
+    });
+
+    if (!res.ok) {
+      throw new Error(`USDA API error: ${res.status} ${res.statusText}`);
+    }
+
+    const data = await res.json();
+    const foods = data.foods || [];
+
+    return pickBestMatches(foods, query)
+      .slice(0, 5)
+      .map(item => ({
+        id: item.fdcId,
+        description: item.description,
+      }));
+  } catch (error) {
+    console.error("Food search failed:", error);
     return [];
   }
-
-  const data = await res.json();
-  const bestMatches = pickBestMatches(data.foods, query) ?? []
-
-  console.log('best', bestMatches);
-
-  const descriptions: MinimalSearchItem[] = bestMatches.map(item => ({
-    id: item.fdcId,
-    description: item.description
-  }));
-
-
-  if (descriptions.length === 0) {
-    throw new Error(`No matching food items found for "${query}". Please try a different name.`);
-  }
-
-  return descriptions;
 }

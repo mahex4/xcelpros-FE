@@ -2,15 +2,14 @@
 import { Button } from "@/components/ui/button";
 import { getCalories, saveMeal } from "../actions";
 import { CaloriesFormState, SaveMealState } from "@/lib/types";
-import { useActionState, useCallback, useEffect, useState, useTransition } from "react";
+import { useActionState, useState, useTransition } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
-import { LoaderCircle, LoaderIcon } from "lucide-react";
-import useDebounce from "@/hooks/useDebounce";
-import { MinimalSearchItem, toCapitalizedWords } from "@/lib/utils";
+import { LoaderCircle, Plus } from "lucide-react";
+import SearchInput from "./SearchInput";
 
 const initialState: CaloriesFormState = {
     error: null,
@@ -25,15 +24,7 @@ export default function CalorieForm() {
     });
     const [isSaving, startSaving] = useTransition();
     const router = useRouter();
-    const [search, setSearch] = useState("")
-    const debouncedSearch = useDebounce(search, 500)
-    const [itemsList, setItemsList] = useState<MinimalSearchItem[]>([])
-    const [itemSelected, setItemSelected] = useState(false)
-    const [loadingList, setLoadingList] = useState(false)
-
-    useEffect(() => {
-        console.log(itemsList);
-    }, [itemsList])
+    const [formKey, setFormKey] = useState(0);
 
     const handleSaveMeal = () => {
         if (!state.data) return;
@@ -48,6 +39,7 @@ export default function CalorieForm() {
                 if (result.success) {
                     toast.success("Meal added successfully");
                     router.refresh();
+                    setFormKey(prev => prev + 1);
                     await fetch('/api/revalidate?tag=meals');
                 }
             } catch (error) {
@@ -59,38 +51,6 @@ export default function CalorieForm() {
             }
         });
     };
-
-    useEffect(() => {
-        if (!debouncedSearch.trim()) {
-            setItemsList([]);
-            return;
-        }
-
-        setItemSelected(false)
-        const fetchData = async () => {
-            setLoadingList(true)
-            try {
-                const res = await fetch(`/api/search?query=${encodeURIComponent(debouncedSearch)}`);
-                if (!res.ok) throw new Error("Failed to fetch food items");
-
-                const data = await res.json();
-                setItemsList(data);
-            } catch (err) {
-                console.error("Error fetching food items:", err);
-                setItemsList([]);
-            } finally {
-                setLoadingList(false)
-            }
-        };
-
-        fetchData();
-    }, [debouncedSearch]);
-
-    const handleItemSelect = useCallback((description: string) => {
-        setSearch(toCapitalizedWords(description));
-        setItemsList([]);
-        setItemSelected(true);
-    }, []);
 
     return (
         <form
@@ -105,48 +65,7 @@ export default function CalorieForm() {
                 <Label htmlFor="dish_name" className="block mb-1 font-medium">
                     Dish Name
                 </Label>
-                <div className=" w-full relative">
-                    <Input
-                        type="text"
-                        id="dish_name"
-                        name="dish_name"
-                        placeholder="Enter your Dish"
-                        autoComplete="off"
-                        value={search}
-                        onChange={e => {
-                            setSearch(e.target.value)
-                            setItemSelected(false)
-                        }}
-                        required
-                        aria-required="true"
-                        aria-invalid={state?.error ? "true" : "false"}
-                        aria-describedby="dish-name-error"
-                        className="w-full p-2 border rounded"
-                    />
-                    <div className="">
-                        {loadingList && <LoaderCircle className=" absolute top-1/4 right-[10px] animate-spin opacity-40" />}
-                    </div>
-                </div>
-                {!itemSelected && itemsList.length > 0 && (
-                    <div className="relative">
-                        <div className="absolute z-10 w-full bg-white dark:bg-card border rounded shadow">
-                            {itemsList.map((item, index) => (
-                                <div
-                                    key={`item-${index}-${item.id}`}
-                                    onClick={() => handleItemSelect(item.description)}
-                                    className="cursor-pointer hover:bg-slate-100 px-4 py-2 capitalize"
-                                >
-                                    {item.description.toLowerCase()}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
-                {state?.error && (
-                    <p id="dish-name-error" className="text-red-500 mt-1" role="alert">
-                        {state.error}
-                    </p>
-                )}
+                <SearchInput key={`search-${formKey}`} state={state} />
             </div>
 
             <div>
@@ -169,7 +88,7 @@ export default function CalorieForm() {
                 aria-label="Calculate calories"
                 className="w-full"
             >
-                Calculate Calories
+                {isPending ? <LoaderCircle className=" animate-spin" /> : <Plus /> } Calculate Calories
             </Button>
 
             {isPending && (
@@ -192,7 +111,7 @@ export default function CalorieForm() {
                             className="w-full bg-slate-900 dark:bg-card"
                             aria-label="Add to today's meals"
                         >
-                            <LoaderIcon className=" animate-spin" /> Loading meal details
+                            <LoaderCircle className=" animate-spin" /> Loading meal details
                         </Button>
 
                         {saveState.error && (
