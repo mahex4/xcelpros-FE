@@ -169,7 +169,6 @@ export async function getMeals(): Promise<GroupedMeals> {
             };
         });
 
-        console.log('Enhanced grouped meal data:', enhancedMeals);
         return enhancedMeals;
     } catch (error) {
         console.error("Get meals error:", error);

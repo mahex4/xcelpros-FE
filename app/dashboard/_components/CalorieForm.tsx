@@ -8,7 +8,8 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
-import { LoaderIcon } from "lucide-react";
+import { LoaderCircle, Plus } from "lucide-react";
+import SearchInput from "./SearchInput";
 
 const initialState: CaloriesFormState = {
     error: null,
@@ -23,6 +24,7 @@ export default function CalorieForm() {
     });
     const [isSaving, startSaving] = useTransition();
     const router = useRouter();
+    const [formKey, setFormKey] = useState(0);
 
     const handleSaveMeal = () => {
         if (!state.data) return;
@@ -37,6 +39,7 @@ export default function CalorieForm() {
                 if (result.success) {
                     toast.success("Meal added successfully");
                     router.refresh();
+                    setFormKey(prev => prev + 1);
                     await fetch('/api/revalidate?tag=meals');
                 }
             } catch (error) {
@@ -62,22 +65,7 @@ export default function CalorieForm() {
                 <Label htmlFor="dish_name" className="block mb-1 font-medium">
                     Dish Name
                 </Label>
-                <Input
-                    type="text"
-                    id="dish_name"
-                    name="dish_name"
-                    placeholder="Enter your Dish"
-                    required
-                    aria-required="true"
-                    aria-invalid={state?.error ? "true" : "false"}
-                    aria-describedby="dish-name-error"
-                    className="w-full p-2 border rounded"
-                />
-                {state?.error && (
-                    <p id="dish-name-error" className="text-red-500 mt-1" role="alert">
-                        {state.error}
-                    </p>
-                )}
+                <SearchInput key={`search-${formKey}`} state={state} />
             </div>
 
             <div>
@@ -100,7 +88,7 @@ export default function CalorieForm() {
                 aria-label="Calculate calories"
                 className="w-full"
             >
-                Calculate Calories
+                {isPending ? <LoaderCircle className=" animate-spin" /> : <Plus /> } Calculate Calories
             </Button>
 
             {isPending && (
@@ -123,7 +111,7 @@ export default function CalorieForm() {
                             className="w-full bg-slate-900 dark:bg-card"
                             aria-label="Add to today's meals"
                         >
-                            <LoaderIcon className=" animate-spin"/> Loading meal details
+                            <LoaderCircle className=" animate-spin" /> Loading meal details
                         </Button>
 
                         {saveState.error && (
@@ -142,7 +130,7 @@ export default function CalorieForm() {
                         role="status"
                         aria-live="polite"
                     >
-                        <h3 className="font-bold">{state.data.dish_name}</h3>
+                        <h3 className="font-bold capitalize">{state.data.dish_name.toLowerCase()}</h3>
                         <p>Servings: {state.data.servings}</p>
                         <p>Calories per serving: {state.data.calories_per_serving}</p>
                         <p>Total calories: {state.data.total_calories}</p>
